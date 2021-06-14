@@ -1,7 +1,9 @@
-const express = require('express');
+import express from 'express';
+
 const app = express();
 
 // Settings
+app.set('port', process.env.PORT || 3000);
 
 // Middleware, son funciones que se ejecuten antes de que lleguen a las rutas
 
@@ -10,6 +12,6 @@ const app = express();
 // Static files
 
 // Starting the server
-app.listen(3000, () => {
-    console.log('server on port 3000');
+app.listen(app.get('port'), () => {
+    console.log(`server on port ${app.get('port')}`);
 });
