@@ -11,7 +11,7 @@ app.use(morgan('dev'));  // imprime las peticiones al servidor
 app.use(express.json());  // valida si el dato en la petición es un JSON
 
 // Routes
-app.use(require('./routes/task.routes'));
+app.use('/api/tasks', require('./routes/task.routes'));
 
 // Static files
 
