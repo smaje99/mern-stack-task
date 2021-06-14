@@ -6,3 +6,5 @@ router.get('/', (req, res) => {
         status: 'API works!'
     });
 });
+
+module.exports = router;
