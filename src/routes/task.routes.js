@@ -12,7 +12,7 @@ router.post('/', async (req, res) => {
     const { title, description } = req.body;
     const task = new Task({title, description});
     await task.save();
-    res.json({'status': 'Task saved'});
+    res.json({status: 'Task saved'});
 });
 
 router.put('/:id', async (req, res) => {
