@@ -27,6 +27,7 @@
     "webpack": "^5.38.1",
     "webpack-cli": "^4.7.2"
   },
+  "browserslist": "> 0.25%, not dead, not ie 11",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/smaje99/mern-stack-task.git"
