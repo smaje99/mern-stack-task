@@ -1,6 +1,8 @@
 import express from 'express';
 import morgan from 'morgan';
 
+import routes from './routes/task.routes';
+
 const app = express();
 
 // Settings
@@ -11,6 +13,7 @@ app.use(morgan('dev'));  // imprime las peticiones al servidor
 app.use(express.json());  // valida si el dato en la petición es un JSON
 
 // Routes
+app.use(routes);
 
 // Static files
 
