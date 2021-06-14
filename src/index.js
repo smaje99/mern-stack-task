@@ -1,5 +1,6 @@
 const express = require('express');
 const morgan = require('morgan');
+const path = require('path');
 
 const app = express();
 
@@ -14,6 +15,7 @@ app.use(express.json());  // valida si el dato en la petición es un JSON
 app.use('/api/tasks', require('./routes/task.routes'));
 
 // Static files
+app.use(express.static(path.join(__dirname, '/public')))
 
 // Starting the server
 app.listen(app.get('port'), () => {
