@@ -1,7 +1,6 @@
 {
   "name": "mern-stack-task",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -9,7 +8,7 @@
     "dev": "nodemon src/index.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Sergio Majé",
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
@@ -18,5 +17,14 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.7"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/smaje99/mern-stack-task.git"
+  },
+  "bugs": {
+    "url": "https://github.com/smaje99/mern-stack-task/issues"
+  },
+  "homepage": "https://github.com/smaje99/mern-stack-task#readme",
+  "description": ""
 }
