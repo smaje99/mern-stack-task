@@ -2,7 +2,43 @@ import React, { Component } from 'react';
 
 class App extends Component {
 
-    
+    constructor() {
+        super();
+        this.state = {
+            title: '',
+            description: ''
+        };
+        this.addTask = this.addTask.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+    }
+
+    addTask(e) {
+        fetch('/api/tasks', {
+            method: 'POST',
+            body: JSON.stringify(this.state),
+            headers: {
+                'Accept': "application/json",
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(res => res.json())
+            .then(data => {
+                M.toast({html: data.status})
+                this.setState({
+                    title: '',
+                    description: ''
+                })
+            })
+            .catch(err => console.error(err));
+        e.preventDefault();
+    }
+
+    handleChange(e) {
+        const { name, value } = e.target;
+        this.setState({
+            [name]: value
+        });
+    }
 
     render() {
         return (
