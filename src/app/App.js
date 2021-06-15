@@ -6,10 +6,12 @@ class App extends Component {
         super();
         this.state = {
             title: '',
-            description: ''
+            description: '',
+            tasks: []
         };
         this.addTask = this.addTask.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.getTasks = this.getTasks.bind(this);
     }
 
     addTask(e) {
@@ -28,9 +30,20 @@ class App extends Component {
                     title: '',
                     description: ''
                 })
+                this.getTasks();
             })
             .catch(err => console.error(err));
         e.preventDefault();
+    }
+
+    componentDidMount() {
+        this.getTasks();
+    }
+
+    getTasks() {
+        fetch('/api/tasks')
+            .then(res => res.json())
+            .then(data => setState({tasks: data}));
     }
 
     handleChange(e) {
@@ -84,7 +97,24 @@ class App extends Component {
                             </div>
                         </div>
                         <div className=" col s7">
-                            
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Title</th>
+                                        <th>Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {this.state.tasks.map(task => {
+                                        return (
+                                            <tr key={task._id}>
+                                                <td>{task.title}</td>
+                                                <td>{task.description}</td>
+                                            </tr>
+                                        )
+                                    })}
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
