@@ -7,7 +7,8 @@ class App extends Component {
         this.state = {
             title: '',
             description: '',
-            tasks: []
+            tasks: [],
+            _id: ''
         };
         this.addTask = this.addTask.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -17,25 +18,45 @@ class App extends Component {
     }
 
     addTask(e) {
-        fetch('/api/tasks', {
-            method: 'POST',
-            body: JSON.stringify(this.state),
-            headers: {
-                'Accept': "application/json",
-                'Content-Type': 'application/json'
-            }
-        })
-            .then(res => res.json())
-            .then(data => {
-                M.toast({html: data.status})
-                this.setState({
-                    title: '',
-                    description: ''
-                })
-                this.getTasks();
-            })
-            .catch(err => console.error(err));
         e.preventDefault();
+        if (this.state._id) {
+            fetch(`/api/tasks/${this.state._id}`, {
+                method: 'PUT',
+                body: JSON.stringify(this.state),
+                header: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(res => res.json())
+                .then(data => {
+                    M.toast({html: data.status});
+                    this.setState({
+                        title: '',
+                        description: ''
+                    });
+                    this.getTasks();
+                });
+        } else {
+            fetch('/api/tasks', {
+                method: 'POST',
+                body: JSON.stringify(this.state),
+                headers: {
+                    'Accept': "application/json",
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(res => res.json())
+                .then(data => {
+                    M.toast({html: data.status});
+                    this.setState({
+                        title: '',
+                        description: ''
+                    });
+                    this.getTasks();
+                })
+                .catch(err => console.error(err));
+        }
     }
 
     componentDidMount() {
@@ -48,7 +69,17 @@ class App extends Component {
             .then(data => setState({tasks: data}));
     }
 
-    
+    editTask(id) {
+        fetch(`/api/tasks/${id}`)
+            .then(res => res.json())
+            .then(data => {
+                this.setState({
+                    title: data.title,
+                    description: data.description,
+                    _id: data._id
+                })
+            });
+    }
 
     deleteTask(id) {
         if (confirm('Are you sure you want to delete it?')) {
