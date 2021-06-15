@@ -12,6 +12,8 @@ class App extends Component {
         this.addTask = this.addTask.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.getTasks = this.getTasks.bind(this);
+        this.editTask = this.editTask.bind(this);
+        this.deleteTask = this.deleteTask.bind(this);
     }
 
     addTask(e) {
@@ -44,6 +46,25 @@ class App extends Component {
         fetch('/api/tasks')
             .then(res => res.json())
             .then(data => setState({tasks: data}));
+    }
+
+    
+
+    deleteTask(id) {
+        if (confirm('Are you sure you want to delete it?')) {
+            fetch(`/api/tasks/${id}`, {
+                method: 'DELETE',
+                header: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(res => res.json())
+                .then(data => {
+                    M.toast({html: data.status});
+                    this.getTasks();
+                });
+        }
     }
 
     handleChange(e) {
@@ -110,6 +131,23 @@ class App extends Component {
                                             <tr key={task._id}>
                                                 <td>{task.title}</td>
                                                 <td>{task.description}</td>
+                                                <td>
+                                                    <button
+                                                        className="btn light-blue darken-4"
+                                                        onClick={() => this.editTask(task._id)}>
+                                                        <i className="material-icons">
+                                                            edit
+                                                        </i>
+                                                    </button>
+                                                    <button
+                                                        className="btn light-blue darken-4"
+                                                        style={{margin: '4px'}}
+                                                        onClick={() => this.deleteTask(task._id)}>
+                                                        <i className="material-icons">
+                                                            delete
+                                                        </i>
+                                                    </button>
+                                                </td>
                                             </tr>
                                         )
                                     })}
